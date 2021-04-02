@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Labirinto</title>
+    <title>MAZE - Retrogames</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/console.css">
+    <link rel="stylesheet" href="./styles/screen.css">
+    <link rel="stylesheet" href="./styles/buttons.css">
 
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
@@ -83,10 +86,11 @@
                     </div>
                     <div id="play">
                         <h2>MAZE</h2>
-                        <p class="option_menu selected">Novo jogo</p>
-                        <p class="option_menu">Como jogar</p>
-                        <p class="option_menu">Configurações</p>
-
+                        <div>
+                            <p class="option_menu selected">Novo jogo</p>
+                            <p class="option_menu">Como jogar</p>
+                            <p class="option_menu">Configurações</p>
+                        </div>
                         <h4>Retrogames<span>&reg;</span></h4>
                     </div>
 
@@ -118,9 +122,9 @@
 
                     <div id="win_game" class="hidden">
                         <div>
-                        <h2>VOCÊ GANHOU!!!</h2>
-                        <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_zEkQFc.json"
-                            background="transparent" speed="1" class="lotie-file" loop autoplay></lottie-player>
+                            <h2>VOCÊ GANHOU!!!</h2>
+                            <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_zEkQFc.json"
+                                background="transparent" speed="1" class="lotie-file" loop autoplay></lottie-player>
                         </div>
                     </div>
                 </div>
@@ -171,6 +175,7 @@
             </section>
         </div>
     </div>
+
 
     <script src="./script.js"></script>
 </body>

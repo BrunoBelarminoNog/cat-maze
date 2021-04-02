@@ -1,0 +1,329 @@
+#controls {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+#controls .buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.up {
+    grid-area: up;
+    border-radius: 8px 8px 0 0;
+    border: 4px solid black;
+    border-bottom: 1px solid #999;
+}
+
+.press_up {
+    animation: fadeUp 100ms forwards linear;
+}
+
+.press_up svg {
+    transform: scale(.98) translateY(-2px);
+    transition: all 100ms;
+}
+
+.down {
+    grid-area: down;
+    border-radius: 0 0 8px 8px;
+    border: 4px solid black;
+    border-top: 1px solid #999;
+}
+
+.press_down {
+    animation: fadeDown 100ms forwards linear;
+}
+
+.press_down svg {
+    transform: scale(.98) translateY(2px);
+    transition: all 100ms;
+}
+
+.left {
+    grid-area: leftx;
+    border-radius: 8px 0 0 8px;
+    border: 4px solid black;
+    border-right: 1px solid #999;
+}
+
+.press_left {
+    animation: fadeLeft 100ms forwards linear;
+}
+
+.press_left svg {
+    transform: scale(.98) translateX(-2px);
+    transition: all 100ms;
+}
+
+.right {
+    grid-area: rightx;
+    border-radius: 0 8px 8px 0;
+    border: 4px solid black;
+    border-left: 1px solid #999;
+}
+
+.press_right {
+    animation: fadeRight 100ms forwards linear;
+}
+
+.press_right svg {
+    transform: scale(.98) translateX(2px);
+    transition: all 100ms;
+}
+
+.center {
+    grid-area: centerx;
+}
+
+@keyframes fadeRight {
+    from {
+        box-shadow: none;
+    }
+    to {
+        box-shadow: inset -10px 0px 10px -3px rgba(153, 153, 153, 0.527),
+                    inset 8px 8px 16px white;
+    }
+}
+
+@keyframes fadeLeft {
+    from {
+        box-shadow: none;
+    }
+    to {
+        box-shadow: inset 10px 0px 12px -3px rgba(153, 153, 153, 0.527),
+                    inset -8px 8px 16px white;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        box-shadow: none;
+    }
+    to {
+        box-shadow: inset 0px 10px 10px -3px rgba(153, 153, 153, 0.527),
+                    inset -8px 8px 16px white;
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        box-shadow: none;
+    }
+    to {
+        box-shadow: inset 0px -10px 12px -3px rgba(153, 153, 153, 0.527),
+                    inset 8px 8px 16px white;
+    }
+}
+
+#controls .arrows{
+    height: 110px;
+    width: 110px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: 
+        ". up ."
+        "leftx centerx rightx"
+        ". down .";
+    transform: translateY(2vh);
+}
+
+.up, .down, .left, .right, .center {
+    width: 100%;
+    height: 100%;
+    background-color: aliceblue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#controls .config {
+    display: flex;
+    margin-left: auto;
+}
+
+.btn_start {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    background-color: green;
+    border-radius: 50%;
+    transform: translateY(18px);
+    margin-right: 16px;
+    border: 4px solid #000;
+    box-shadow: inset 4px 4px 9px #005d00,
+            inset -4px -4px 9px #00a300;
+}
+.btn_start  span {
+    color: #555;
+    position: absolute;
+    font-size: .6rem;
+    font-weight: bold;
+    bottom: -22px;
+    left: 4px;
+    transform: rotate(-20deg);
+}
+
+.reset {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    border-radius: 50%;
+    transform: translateY(-18px);
+    border: 4px solid #000;
+    background: linear-gradient(145deg, #FF0A0A, #BC0707);
+    box-shadow: inset 5px 5px 10px #a30303,
+            inset -5px -5px 10px #e29292;
+}
+.reset span {
+    color: #555;
+    position: absolute;
+    font-size: .6rem;
+    font-weight: bold;
+    bottom: -20px;
+    left: 4px;
+    transform: rotate(-20deg);
+}
+
+.decoration {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.aberturas {
+    display: flex;
+}
+
+.aberturas div {
+    width: 7px;
+    height: 50px;
+    margin-right: 8px;
+    background-color: black;
+    border-radius: 8px;
+    transform: rotate(-25deg) translate(10px, 5px);
+}
+
+/*** Small devices ***/
+@media only screen and (min-width: 376px){
+    #controls .buttons {
+        flex: 1;
+    }
+
+    #controls .arrows{
+        height: 130px;
+        width: 130px;
+        transform: translateY(0px);
+    }
+
+    .btn_start {
+        width: 45px;
+        height: 45px;
+        border: 5px solid #000;
+    }
+    .btn_start  span {
+        font-size: .7rem;
+        bottom: -25px;
+        left: 2px;
+    }
+
+    .reset {
+        width: 45px;
+        height: 45px;
+        border: 5px solid #000;
+    }
+    .reset span {
+        font-size: .7rem;
+        bottom: -23px;
+        left: 4px;
+    }
+
+    .decoration {
+        margin-bottom: 1rem;
+    }
+
+    .aberturas div {
+        width: 10px;
+        height: 60px;
+        margin-right: 10px;
+        transform: rotate(-25deg);
+    }
+}
+
+
+/*** Medium devices ***/
+@media only screen and (min-width: 768px) {
+    #controls {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 2rem 2rem 1rem;
+        align-items: center;
+    }
+
+    #controls .buttons {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    #controls .arrows{
+        height: 130px;
+        width: 130px;
+    }
+
+    .decoration {
+        margin-bottom: 0;
+    }
+
+    .aberturas div {
+        transform: rotate(-25deg) translate(30px, 15px);
+    }
+}
+
+
+/*** Extra large devices ***/
+@media only screen and (min-width: 1200px) {
+    #controls .arrows{
+        height: 150px;
+        width: 150px;
+    }
+
+    .btn_start {
+        width: 50px;
+        height: 50px;
+        transform: translateY(24px);
+    }
+
+    .btn_start  span {
+        left: 4px;
+    }
+
+    .reset {
+        width: 50px;
+        height: 50px;
+       transform: translateY(-24px);
+    }
+    .reset span {
+        bottom: -25px;
+        left: 6px;
+    }
+
+    .aberturas div {
+        width: 10px;
+        height: 70px;
+        margin-right: 10px;
+        transform: rotate(-25deg) translate(30px, 15px);
+    }
+}

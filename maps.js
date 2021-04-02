@@ -1,0 +1,36 @@
+const maps = [
+    [
+        "WWWWWWWWWWWWWWWWWWWWW",
+        "W   W     W     W W W",
+        "W W W WWW WWWWW W W W",
+        "W W W   W     W W   W",
+        "W WWWWWWW W WWW W W W",
+        "W         W     W W W",
+        "W WWW WWWWW WWWWW W W",
+        "W W   W   W W     W W",
+        "W WWWWW W W W WWW W F",
+        "S     W W W W W W WWW",
+        "WWWWW W W W W W W W W",
+        "W     W W W   W W W W",
+        "W WWWWWWW WWWWW W W W",
+        "W       W       W   W",
+        "WWWWWWWWWWWWWWWWWWWWW",
+    ],
+    [
+        "WWWWWWWWWWWWWWWWWWWWW",
+        "S   W WWW W         W",
+        "WWW W     W WWWWWW WW",
+        "W   WWWWW    W     WW",
+        "W WWW   WWWW WW WWWWW",
+        "W  WW W W    WW   W W",
+        "WW WW W W WWWWW W W W",
+        "WW WW W W   W W W W W",
+        "WW    W WWW W W W   W",
+        "WW WWWW       W WWW W",
+        "WW WWWWWWWWWW W W   W",
+        "W           W W W WWW",
+        "W WWWWWWWWW W W W W F",
+        "W         W W   W   W",
+        "WWWWWWWWWWWWWWWWWWWWW"
+    ]
+]

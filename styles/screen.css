@@ -1,0 +1,321 @@
+#screen {
+    background-color: #7CA826;
+    width: 100%;
+    min-height: 250px;
+    border: 8px solid #000000;
+    border-radius: 12px;
+    margin: 0 auto;
+    position: relative;
+    font-family: 'Press Start 2P', cursive;
+    color: #3a3a3a;
+    overflow: hidden;
+}
+
+#screen .screen_border {
+    width: 100%;
+    height: 100%;
+    border: 6px solid #57751a;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#screen #notification_bar {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.116);
+}
+
+#screen #notification_bar header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .1rem .3rem;
+    font-size: .3rem;
+}
+
+#screen #notification_bar header div, #screen #notification_bar header span {
+    display: flex;
+    align-items: center;
+}
+
+#screen #notification_bar header #effects_notification, #screen #notification_bar header #clock {
+    margin-right: 6px;
+}
+
+#screen #notification_bar header svg {
+    height: 8px;
+    fill: #3a3a3a;
+}
+
+#screen #notification_bar header #timer .icon_timer {
+    margin-right: 3px;
+}
+
+#screen #play {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+}
+
+#screen #play h2{
+    font-size: 1.4rem;
+    margin-top: 1rem;
+}
+
+#screen #play p {
+    width: fit-content;
+    margin: 6px auto;
+    text-align: center;
+    font-size: .5rem;
+    line-height: .7rem;
+    border-bottom: 3px solid transparent;
+    
+}
+
+#screen #play p.selected {
+    border-bottom: 3px solid rgb(58, 58, 58);
+}
+
+#screen #play h4 {
+    margin-bottom: 8px;
+    position: relative;
+    font-size: .6rem;
+}
+
+#screen #play h4 span{
+    position: absolute;
+    font-size: .6rem;
+    top: -5px;
+    right: -12px;
+}
+
+#screen #instructions, #screen #settings, #screen #win_game {
+    width: 100%;
+    height: auto;
+    padding: .7rem;
+    flex: 1;
+    display: flex;
+}
+
+#screen #settings, #screen #win_game {
+    align-items: center;
+    justify-content: center;
+}
+
+#screen #instructions {
+    overflow-y: auto;
+}
+
+#screen #instructions h3, #screen #settings h3 {
+    font-size: .8rem;
+    margin-bottom: 12px;
+}
+
+#screen #settings h3 {
+    margin-bottom: 32px;
+}
+
+#screen #instructions p, #screen #settings p{
+    font-size: .5rem;
+    line-height: .7rem;
+    margin-bottom: 6px;
+}
+
+#screen #settings p {
+    padding-bottom: 2px;
+    display: inline;
+    width: fit-content;
+}
+
+#screen #settings .selected {
+    border-bottom: 3px solid rgb(58, 58, 58);
+}
+
+#screen #settings span {
+    font-size: .5rem;
+    margin-left: 6px;
+}
+
+#screen #settings span.active {
+    font-weight: bold;
+    font-size: .6rem;
+}
+
+#screen #game {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#screen #game #container_map_game {
+    width: 90%;
+    height: 80%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#screen #game #container_map_game > div{
+    width: calc(100% / 21);
+    height: calc(100% / 15);
+    position: relative;
+}
+
+#screen #game div.wall {
+    background-color: #5f5f5f;
+}
+
+#screen #game div.player::before {
+    content: "";
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    border-radius: 50%;
+    background-color: black;
+}
+
+#screen #win_game {
+    padding: .7rem;
+}
+
+
+#screen #win_game h2{
+    font-size: calc(1vw + .4rem);
+    text-align: center;
+    letter-spacing: .15rem;
+    animation: flash 1s 2.5s steps(2) infinite;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#screen #win_game .lotie-file {
+    opacity: .7;
+    width: 80%;
+    height: 132px;
+    margin: .5rem auto 0;
+    transform: translateX(10%);
+    animation: animaCat 4s infinite steps(30); 
+}
+
+@keyframes animaCat {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(110%);
+    }
+}
+
+@keyframes flash {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(2);
+    }
+}
+
+/*** Small devices ***/
+@media only screen and (min-width: 375px){
+    #screen {       
+        border: 10px solid #000000;
+    }
+
+    #screen #notification_bar header {
+        font-size: .4rem;
+    }
+
+    #screen #notification_bar header svg {
+        height: 12px;
+    }
+
+    #screen #play h2{
+        margin-top: 2rem;
+    }
+
+    #screen #play p {
+        font-size: .6rem;
+        line-height: .8rem;
+    }
+
+    #screen #play h4 {
+        font-size: .7rem;
+    }
+
+    #screen #instructions p, #screen #settings p{
+        font-size: .6rem;
+        line-height: .8rem;
+    }
+    
+    #screen #win_game h2{
+        font-size: .9rem;
+        animation: typing 2s steps(14) normal both, flash 1s 2.5s steps(2) infinite;
+    }
+
+    @keyframes typing {
+        from {
+            width: 0;
+        }
+        to {
+            width: 100%;
+        }
+    }
+}
+
+/*** Medium devices ***/
+@media only screen and (min-width: 768px) {
+    #screen {
+        background-color: #7CA826;
+        width: 100%;
+        max-width: 650px;
+        border: 12px solid #000000;
+        border-radius: 12px;
+        margin: 0 auto;
+        position: relative;
+        font-family: 'Press Start 2P', cursive;
+        color: #3a3a3a;
+        overflow: hidden;
+    }
+    
+    #screen .screen_border {
+        width: 100%;
+        height: 100%;
+        border: 6px solid #57751a;
+        position: absolute;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    #screen #settings span {
+        font-size: .6rem;
+        margin-left: 12px;
+    }
+    
+    #screen #settings span.active {
+        font-weight: bold;
+        font-size: .7rem;
+    }
+
+}
+
+/*** Extra large devices ***/
+@media only screen and (min-width: 1200px) {
+    #screen {
+        max-width: 650px;
+        height: 300px;
+    }
+}
