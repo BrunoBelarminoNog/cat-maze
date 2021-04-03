@@ -13,11 +13,16 @@ const btnLeft = document.querySelector('.left');
 const btnStart = document.querySelector('.btn_start');
 const btnReset = document.querySelector('.reset');
 const optionsMenu = document.querySelectorAll('.option_menu');
+const optionsSettings = document.querySelectorAll('.option_settings');
+const themeOptions = document.querySelectorAll('.theme_option');
+const themeClassic = document.querySelector('.theme_classic');
+const themeNight = document.querySelector('.theme_night');
+const themeFerrari = document.querySelector('.theme_ferrari');
 const effects = document.querySelector('.effects')
 const effectsOn = document.querySelector('.effects_on');
 const effectsOff = document.querySelector('.effects_off');
 const iconEffectOn = document.querySelector('#effects_notification .icon_effects-on');
-const iconEffectOff = document.querySelector('#effects_notification .icon_effects-off'); 
+const iconEffectOff = document.querySelector('#effects_notification .icon_effects-off');
 const clock = document.getElementById('clock');
 
 const map = [
@@ -38,14 +43,50 @@ const map = [
     "WWWWWWWWWWWWWWWWWWWWW",
 ];
 
-let menu = {
-    main: true,
-    selected: 0,
+// let menu = {
+//     main: true,
+//     selected: 0,
+//     playing: false,
+//     instructions: false,
+//     settings: [
+//         false,
+//         false,
+//         {
+//             effects: true,
+//             selected: 0
+//         },
+//         {
+//             themes: ['default', 'night', 'ferrari'],
+//             selected: 0
+//         }
+//     ],
+//     winnerScreen: false
+// }
+
+const Menu = {
+    main: {
+        show: true,
+        selected: 0
+    },
     playing: false,
     instructions: false,
-    settings: [false, false, {effects: true, selected: 0}],
+    settings: {
+        show: false,
+        selected: 0,
+        effects: {
+            show: false,
+            turned_on: true,
+            selected: 0
+        },
+        themes: {
+            show: false,
+            list: ['default', 'night', 'ferrari'],
+            selected: 0
+        }
+    },
     winnerScreen: false
 }
+
 
 let timer
 let time = null;
@@ -59,15 +100,15 @@ map.forEach((element) => {
     line.map(e => {
         const containerCell = document.createElement('div')
 
-        if(e === "W") {
+        if (e === "W") {
             containerCell.classList.add('wall')
             containerCell.classList.add('pixel')
-        }  else if(e === "S") {
+        } else if (e === "S") {
             containerCell.classList.add('start')
             containerCell.classList.add('player')
             containerCell.classList.add('floor')
             containerCell.classList.add('pixel')
-        } else if(e === "F") {
+        } else if (e === "F") {
             containerCell.classList.add('finished')
             containerCell.classList.add('floor')
             containerCell.classList.add('pixel')
@@ -82,37 +123,37 @@ map.forEach((element) => {
 
 document.addEventListener('keydown', (event) => {
 
-    if (menu.main) {
+    if (Menu.main.show) {
         effectsSounds('click')
         selectOptionMenu(event)
         return
     }
-   
-    if (menu.playing) {
+
+    if (Menu.playing) {
         effectsSounds('move')
         movePlayer(event)
         return
-    } 
+    }
 
-    if(menu.winnerScreen) {
+    if (Menu.winnerScreen) {
         effectsSounds('click')
         returnMainMenu(event)
         return
     }
 
-    if(menu.instructions) {
+    if (Menu.instructions) {
         effectsSounds('click')
         setInstructions(event);
         return
     }
 
-    if(menu.settings[0] && menu.settings[1] === false) {
+    if (Menu.settings.show && !Menu.settings.effects.show && !Menu.settings.themes.show) {
         effectsSounds('click')
         getConfiguration(event)
         return
     }
 
-    if(menu.settings[0] && menu.settings[1]) {
+    if (Menu.settings.show && (Menu.settings.effects.show || Menu.settings.themes.show)) {
         effectsSounds('click')
         setConfiguration(event)
         return
@@ -122,9 +163,9 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('keyup', (e) => {
 
-    if(e.key === "ArrowRight") {
+    if (e.key === "ArrowRight") {
         btnRight.classList.remove('press_right')
-    } else if(e.key === "ArrowLeft") {
+    } else if (e.key === "ArrowLeft") {
         btnLeft.classList.remove('press_left')
     } else if (e.key === "ArrowUp") {
         btnUp.classList.remove('press_up')
@@ -140,7 +181,7 @@ document.addEventListener('keyup', (e) => {
 
 let position = ""
 map.forEach((e, i) => {
-    e.indexOf('S') !== -1 ? position = [i, e.indexOf('S')]: null
+    e.indexOf('S') !== -1 ? position = [i, e.indexOf('S')] : null
 })
 
 const mapGame = document.querySelectorAll('.pixel')
@@ -152,35 +193,35 @@ function movePlayer(event) {
     if (event.key === "ArrowUp") {
         btnUp.classList.add('press_up');
 
-       if(map[position[0] - 1][position[1]] === "W" || position[0] === 0) {
-           event.preventDefault()
+        if (map[position[0] - 1][position[1]] === "W" || position[0] === 0) {
+            event.preventDefault()
         } else {
-           position[0] = position[0] - 1
+            position[0] = position[0] - 1
         }
     } else if (event.key === "ArrowDown") {
         btnDown.classList.add('press_down');
-        if(map[position[0] + 1 ][position[1]] === "W" || position[0] === map.length - 1) {
+        if (map[position[0] + 1][position[1]] === "W" || position[0] === map.length - 1) {
             event.preventDefault()
-         } else {
+        } else {
             position[0] = position[0] + 1
-         }
+        }
     } else if (event.key === "ArrowLeft") {
         btnLeft.classList.add('press_left')
-        if(map[position[0]][position[1] - 1] === "W" || position[1] === 0) {
+        if (map[position[0]][position[1] - 1] === "W" || position[1] === 0) {
             event.preventDefault()
         } else {
             position[1] = position[1] - 1
         }
     } else if (event.key === "ArrowRight") {
         btnRight.classList.add('press_right')
-        if(map[position[0]][position[1] + 1] === "W" || position[1] === map[0].length - 1) {
+        if (map[position[0]][position[1] + 1] === "W" || position[1] === map[0].length - 1) {
             event.preventDefault()
         } else {
             position[1] = position[1] + 1
         }
     }
 
-    if(event.key === "Delete") {
+    if (event.key === "Delete") {
         btnReset.classList.add('press_reset')
 
         menu.playing = false;
@@ -194,7 +235,7 @@ function movePlayer(event) {
 
         containerScreenGame.classList.add('hidden');
         containerScreenStartGame.classList.remove('hidden')
-        
+
         position = [9, 0]
     }
 
@@ -223,24 +264,24 @@ function renderPosition(position, event) {
 }
 
 function timerGame() {
-    if(time >= 60) {
+    if (time >= 60) {
 
         min = Math.floor(time / 60)
         sec = time - (min * 60)
-        if(sec < 10) {
-            sec = `0${sec}`
-        }
-    } 
-
-    if(time < 60 && time > 0) {
-        min = 0
-        sec = time
-        if(sec < 10) {
+        if (sec < 10) {
             sec = `0${sec}`
         }
     }
 
-    if(!time) {
+    if (time < 60 && time > 0) {
+        min = 0
+        sec = time
+        if (sec < 10) {
+            sec = `0${sec}`
+        }
+    }
+
+    if (!time) {
         min = 0
         sec = `00`
     }
@@ -251,18 +292,18 @@ function timerGame() {
 }
 
 function checkResult(pixelMap) {
-    if(pixelMap === 188) {
+    if (pixelMap === 188) {
         containerScreenGame.classList.add('hidden');
         containerScreenWinGame.classList.remove('hidden');
-        
+
         clearInterval(timer)
 
-        setTimeout(()=> {
+        setTimeout(() => {
             effectsSounds('win')
         }, 500)
 
-        menu.playing = false
-        menu.winnerScreen = true
+        Menu.playing = false
+        Menu.winnerScreen = true
 
         position = [9, 0]
         renderPosition(position)
@@ -270,10 +311,10 @@ function checkResult(pixelMap) {
 }
 
 function returnMainMenu(event) {
-    if(event.key === "Enter" || event.key === "Delete") {
+    if (event.key === "Enter" || event.key === "Delete") {
         event.key === "Enter" ? btnStart.classList.add('press_btn_start') : btnReset.classList.add('press_reset')
-        menu.winnerScreen = false
-        menu.main = true
+        Menu.winnerScreen = false
+        Menu.main.show = true
 
         time = null
         contentTimer.innerHTML = "0:00"
@@ -288,17 +329,17 @@ function returnMainMenu(event) {
 function selectOptionMenu(event) {
     if (event.key === "ArrowUp") {
         btnUp.classList.add('press_up');
-       
-        if(menu.selected === 1){
+
+        if (Menu.main.selected === 1) {
             optionsMenu[1].classList.remove('selected');
             optionsMenu[0].classList.add('selected');
 
-            menu.selected = 0
-        } else if (menu.selected === 2) {
+            Menu.main.selected = 0
+        } else if (Menu.main.selected === 2) {
             optionsMenu[2].classList.remove('selected');
             optionsMenu[1].classList.add('selected');
 
-            menu.selected = 1
+            Menu.main.selected = 1
         } else {
             event.preventDefault()
         }
@@ -306,237 +347,355 @@ function selectOptionMenu(event) {
     } else if (event.key === "ArrowDown") {
         btnDown.classList.add('press_down');
 
-        if(menu.selected === 0){
+        if (Menu.main.selected === 0) {
             optionsMenu[0].classList.remove('selected')
             optionsMenu[1].classList.add('selected')
 
-            menu.selected = 1
-        } else if (menu.selected === 1){
+            Menu.main.selected = 1
+        } else if (Menu.main.selected === 1) {
             optionsMenu[1].classList.remove('selected')
             optionsMenu[2].classList.add('selected')
 
-            menu.selected = 2
+            Menu.main.selected = 2
         } else {
             event.preventDefault()
         }
-        
+
     } else if (event.key === "ArrowLeft") {
         btnLeft.classList.add('press_left')
-        
+
     } else if (event.key === "ArrowRight") {
         btnRight.classList.add('press_right')
-        if(menu.selected === 0) {
+        if (Menu.main.selected === 0) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenGame.classList.remove('hidden');
-            menu.playing = true;
-            menu.main = false;
+            Menu.playing = true;
+            Menu.main.show = false;
 
             timer = setInterval(timerGame, 1000);
             containerTimerGame.classList.remove('hidden');
 
             event.preventDefault()
-        } else if (menu.selected === 1) {
+        } else if (Menu.main.selected === 1) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenInstructions.classList.remove('hidden');
-            menu.instructions = true;
-            menu.main = false;
+            Menu.instructions = true;
+            Menu.main.show = false;
             event.preventDefault()
-        } else if (menu.selected === 2) {
+        } else if (Menu.main.selected === 2) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenSettings.classList.remove('hidden');
-            menu.settings[0] = true;
-            menu.main = false;
+            Menu.settings.show = true;
+            Menu.main.show = false;
             event.preventDefault()
         }
 
     } else if (event.key === "Enter") {
         btnStart.classList.add('press_btn_start')
 
-        if(menu.selected === 0) {
+        if (Menu.main.selected === 0) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenGame.classList.remove('hidden');
-            menu.playing = true;
-            menu.main = false;
+            Menu.playing = true;
+            Menu.main.show = false;
 
             timer = setInterval(timerGame, 1000);
             containerTimerGame.classList.remove('hidden');
-         
+
             event.preventDefault()
-        } else if (menu.selected === 1) {
+        } else if (Menu.main.selected === 1) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenInstructions.classList.remove('hidden');
-            menu.instructions = true;
-            menu.main = false;
-
+            Menu.instructions = true;
+            Menu.main.show = false;
             event.preventDefault()
-        } else if (menu.selected === 2) {
+        } else if (Menu.main.selected === 2) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenSettings.classList.remove('hidden');
-            menu.settings[0] = true;
-            menu.main = false;
-
+            Menu.settings.show = true;
+            Menu.main.show = false;
             event.preventDefault()
         }
+
+    } else if (event.key === "Delete") {
+        btnReset.classList.add('press_reset');
     }
 }
 
 function setInstructions(event) {
-    if(event.key === "Delete" ) {
+    if (event.key === "Delete") {
         btnReset.classList.add('press_reset')
 
         containerScreenInstructions.classList.add('hidden');
         containerScreenStartGame.classList.remove('hidden');
-        menu.instructions = false;
+        Menu.instructions = false;
 
-        menu.main = true
+        Menu.main.show = true
     } else if (event.key === "ArrowLeft") {
         btnLeft.classList.add('press_left')
 
         containerScreenInstructions.classList.add('hidden');
         containerScreenStartGame.classList.remove('hidden');
-        menu.instructions = false;
-        menu.main = true
+        Menu.instructions = false;
+        Menu.main.show = true
     } else if (event.key === "ArrowRight") {
         btnRight.classList.add('press_right')
     } else if (event.key === "ArrowDown") {
         btnDown.classList.add('press_down');
-    } else if (event.key === "ArrowUp"){
+    } else if (event.key === "ArrowUp") {
         btnUp.classList.add('press_up');
+    } else if (event.key === "Enter") {
+        btnStart.classList.add('press_btn_start')
     }
 }
 
 function getConfiguration(event) {
 
-    if(menu.settings[0]) {
+    if (event.key === "Delete") {
+        btnReset.classList.add('press_reset')
 
-        if(event.key === "Delete" ) {
-            btnReset.classList.add('press_reset')
+        containerScreenSettings.classList.add('hidden');
+        containerScreenStartGame.classList.remove('hidden');
+        optionsSettings[1].querySelector('p').classList.remove('selected');
+        optionsSettings[0].querySelector('p').classList.add('selected');
+        Menu.settings.show = false;
+        Menu.settings.selected = 0
+        Menu.main.show = true
+        event.preventDefault()
 
-            containerScreenSettings.classList.add('hidden');
-            containerScreenStartGame.classList.remove('hidden');
-            menu.settings[0] = false;
-            menu.main = true
-            event.preventDefault()
-    
-        } else if (event.key === "ArrowLeft") {
-            btnLeft.classList.add('press_left')
-    
-            containerScreenSettings.classList.add('hidden');
-            containerScreenStartGame.classList.remove('hidden');
-            menu.settings[0] = false;
-            menu.main = true
-            event.preventDefault()
-    
-        } else if (event.key === "ArrowRight") {
-            btnRight.classList.add('press_right')
-            effects.classList.remove('selected');
+    } else if (event.key === "ArrowLeft") {
+        btnLeft.classList.add('press_left')
 
-            if(menu.settings[2].effects) {
+        containerScreenSettings.classList.add('hidden');
+        containerScreenStartGame.classList.remove('hidden');
+        optionsSettings[1].querySelector('p').classList.remove('selected');
+        optionsSettings[0].querySelector('p').classList.add('selected');
+        Menu.settings.show = false;
+        Menu.settings.selected = 0
+        Menu.main.show = true
+        event.preventDefault()
+
+    } else if (event.key === "ArrowRight") {
+        btnRight.classList.add('press_right')
+
+        if (Menu.settings.selected === 0) {
+            optionsSettings[0].querySelector('p').classList.remove('selected');
+            Menu.settings.effects.show = true
+
+            if (Menu.settings.effects.turned_on) {
                 effectsOn.classList.add('selected')
-                menu.settings[2].selected = 0
-                menu.settings[1] = true
+                Menu.settings.effects.selected = 0
             } else {
                 effectsOff.classList.add('selected')
-                menu.settings[2].selected = 1
-                menu.settings[1] = true
+                Menu.settings.effects.selected = 1
             }
 
-            event.preventDefault()
 
-        } else if (event.key === "ArrowDown") {
-            btnDown.classList.add('press_down');
-        } else if (event.key === "ArrowUp"){
-            btnUp.classList.add('press_up');
-    
-        } else if (event.key === "Enter") {
-            btnStart.classList.add('press_btn_start')
-            effects.classList.remove('selected');
+        } else if (Menu.settings.selected === 1) {
+            optionsSettings[1].querySelector('p').classList.remove('selected');
 
-            if(menu.settings[2].effects) {
-                effectsOn.classList.add('selected')
-                menu.settings[2].selected = 0
-                menu.settings[1] = true
-            } else {
-                effectsOff.classList.add('selected')
-                menu.settings[2].selected = 1
-                menu.settings[1] = true
+            if (Menu.settings.themes.selected === 0) {
+                themeClassic.classList.add('selected')
+            } else if (Menu.settings.themes.selected === 1) {
+                themeNight.classList.add('selected')
+            } else if (Menu.settings.themes.selected === 2) {
+                themeFerrari.classList.add('selected')
             }
 
+            Menu.settings.themes.show = true
+
+        }
+
+        event.preventDefault()
+
+    } else if (event.key === "ArrowDown") {
+        btnDown.classList.add('press_down');
+
+        if (Menu.settings.selected === 0) {
+            optionsSettings[0].querySelector('p').classList.remove('selected');
+            optionsSettings[1].querySelector('p').classList.add('selected');
+
+            Menu.settings.selected = 1
+        }
+
+        event.preventDefault()
+
+    } else if (event.key === "ArrowUp") {
+        btnUp.classList.add('press_up');
+
+        if (Menu.settings.selected === 1) {
+            optionsSettings[1].querySelector('p').classList.remove('selected');
+            optionsSettings[0].querySelector('p').classList.add('selected');
+
+            Menu.settings.selected = 0
+        } else {
             event.preventDefault()
         }
+
+    } else if (event.key === "Enter") {
+        btnStart.classList.add('press_btn_start')
+
+        if (Menu.settings.selected === 0) {
+            optionsSettings[0].querySelector('p').classList.remove('selected');
+
+            if (Menu.settings.effects.turned_on) {
+                effectsOn.classList.add('selected')
+            } else {
+                effectsOff.classList.add('selected')
+            }
+
+            Menu.settings.effects.show = true
+
+        } else if (Menu.settings.selected === 1) {
+            optionsSettings[1].querySelector('p').classList.remove('selected');
+
+            if (Menu.settings.themes.selected === 0) {
+                themeClassic.classList.add('selected')
+            } else if (Menu.settings.themes.selected === 1) {
+                themeNight.classList.add('selected')
+            } else if (Menu.settings.themes.selected === 2) {
+                themeFerrari.classList.add('selected')
+            }
+
+            Menu.settings.themes.show = true
+        }
+
+        event.preventDefault()
     }
 }
 
 function setConfiguration(event) {
 
-    if(menu.settings[1]) {
+    if (event.key === "Delete") {
+        btnReset.classList.add('press_reset')
 
-        if(event.key === "Delete" ) {
-            btnReset.classList.add('press_reset')
+        containerScreenSettings.classList.add('hidden');
+        effectsOff.classList.remove('selected');
+        effectsOn.classList.remove('selected');
+        themeClassic.classList.remove('selected');
+        themeNight.classList.remove('selected');
+        themeFerrari.classList.remove('selected');
+        containerScreenStartGame.classList.remove('hidden');
+        optionsSettings[0].querySelector('p').classList.add('selected');
+        optionsSettings[1].querySelector('p').classList.remove('selected');
+        Menu.settings.show = false;
+        Menu.settings.effects.show = false;
+        Menu.settings.themes.show = false;
+        Menu.settings.selected = 0
+        Menu.main.show = true
 
-            containerScreenSettings.classList.add('hidden');
-            effectsOff.classList.remove('selected');
-            effectsOn.classList.remove('selected');
-            effects.classList.add('selected')
-            containerScreenStartGame.classList.remove('hidden');
-            menu.settings[0] = false;
-            menu.settings[1] = false;
-            menu.main = true
-            
-            event.preventDefault()
-        } else if (event.key === "ArrowLeft") {
-            btnLeft.classList.add('press_left')
-    
-            if(menu.settings[2].selected === 1) {
+        event.preventDefault()
+    } else if (event.key === "ArrowLeft") {
+        btnLeft.classList.add('press_left')
+
+        if (Menu.settings.effects.show) {
+
+            if (Menu.settings.effects.selected === 1) {
                 effectsOn.classList.add('selected');
                 effectsOff.classList.remove('selected');
-                
-                menu.settings[2].selected = 0
-            } else if (menu.settings[2].selected === 0) {
+
+                Menu.settings.effects.selected = 0
+            } else if (Menu.settings.effects.selected === 0) {
                 effectsOn.classList.remove('selected');
-                effects.classList.add('selected');
+                optionsSettings[0].querySelector('p').classList.add('selected');
 
-                menu.settings[1] = false
-                event.preventDefault()
-            } else {
-                event.preventDefault()
+                Menu.settings.effects.show = false
             }
-    
-        } else if (event.key === "ArrowRight") {
-            btnRight.classList.add('press_right')
+            event.preventDefault()
 
-            if(menu.settings[2].selected === 0) {
+        } else if (Menu.settings.themes.show) {
+            themeOptions[Menu.settings.themes.selected].classList.remove('selected');
+            optionsSettings[1].querySelector('p').classList.add('selected');
+
+            Menu.settings.themes.show = false
+        }
+
+    } else if (event.key === "ArrowRight") {
+        btnRight.classList.add('press_right')
+
+        if (Menu.settings.effects.show) {
+            if (Menu.settings.effects.selected === 0) {
                 effectsOn.classList.remove('selected');
                 effectsOff.classList.add('selected');
-                menu.settings[2].selected = 1
+                Menu.settings.effects.selected = 1
             }
-            
-            event.preventDefault()
-        } else if (event.key === "ArrowDown") {
-            btnDown.classList.add('press_down');
-        } else if (event.key === "ArrowUp"){
-            btnUp.classList.add('press_up');
-    
-        } else if (event.key === "Enter") {
-            btnStart.classList.add('press_btn_start')
-            
-            if(menu.settings[2].selected === 0) {
+        }
+
+        event.preventDefault()
+    } else if (event.key === "ArrowDown") {
+        btnDown.classList.add('press_down');
+
+        if (Menu.settings.themes.show && Menu.settings.themes.selected < 2 && Menu.settings.themes.selected >= 0) {
+            themeOptions[Menu.settings.themes.selected].classList.remove('selected');
+            themeOptions[Menu.settings.themes.selected + 1].classList.add('selected');
+
+            Menu.settings.themes.selected++
+        }
+
+        event.preventDefault()
+
+    } else if (event.key === "ArrowUp") {
+        btnUp.classList.add('press_up');
+
+        if (Menu.settings.themes.show && Menu.settings.themes.selected <= 2 && Menu.settings.themes.selected > 0) {
+            themeOptions[Menu.settings.themes.selected].classList.remove('selected');
+            themeOptions[Menu.settings.themes.selected - 1].classList.add('selected');
+
+            Menu.settings.themes.selected--
+        }
+
+        event.preventDefault()
+
+    } else if (event.key === "Enter") {
+        btnStart.classList.add('press_btn_start')
+
+        if (Menu.settings.effects.show) {
+
+            if (Menu.settings.effects.selected === 0) {
                 effectsOff.classList.remove('active');
                 effectsOn.classList.add('active');
-                menu.settings[2].effects = true;
+                Menu.settings.effects.turned_on = true;
                 iconEffectOff.classList.add('hidden');
                 iconEffectOn.classList.remove('hidden');
 
             } else {
                 effectsOff.classList.add('active');
                 effectsOn.classList.remove('active');
-                menu.settings[2].effects = false;
+                Menu.settings.effects.turned_on = false;
                 iconEffectOff.classList.remove('hidden');
                 iconEffectOn.classList.add('hidden');
+
             }
-            event.preventDefault()
+
+        } else if (Menu.settings.themes.show) {
+
+            if (Menu.settings.themes.selected === 0) {
+                document.querySelector('html').classList.add(`${Menu.settings.themes.list[0]}`)
+                document.querySelector('html').classList.remove(`theme-${Menu.settings.themes.list[1]}`)
+                document.querySelector('html').classList.remove(`theme-${Menu.settings.themes.list[2]}`)
+            } else if (Menu.settings.themes.selected === 1) {
+                document.querySelector('html').classList.remove(`${Menu.settings.themes.list[0]}`)
+                document.querySelector('html').classList.add(`theme-${Menu.settings.themes.list[1]}`)
+                document.querySelector('html').classList.remove(`theme-${Menu.settings.themes.list[2]}`)
+            } else if (Menu.settings.themes.selected === 2) {
+                document.querySelector('html').classList.remove(`${Menu.settings.themes.list[0]}`)
+                document.querySelector('html').classList.remove(`theme-${Menu.settings.themes.list[1]}`)
+                document.querySelector('html').classList.add(`theme-${Menu.settings.themes.list[2]}`)
+            }
+
+            themeOptions.forEach((el, i) => {
+                if (i === Menu.settings.themes.selected) {
+                    el.classList.add('active')
+                } else {
+                    el.classList.remove('active')
+                }
+            })
+
         }
+
+        event.preventDefault()
     }
+
 }
 const soundClick = new Audio("./assets/sounds/click.wav");
 const soundMove = new Audio("./assets/sounds/move.wav");
@@ -544,23 +703,23 @@ const soundWin = new Audio("./assets/sounds/final-level.wav");
 
 
 function effectsSounds(effect) {
-    if(!menu.settings[2].effects) {
+    if (!Menu.settings.effects.turned_on) {
         return
     }
 
-    if(effect === "click") {
+    if (effect === "click") {
         soundClick.play();
-    } else if(effect === "move") {
+    } else if (effect === "move") {
         soundMove.play()
-    } else if(effect === "win") {
+    } else if (effect === "win") {
         soundWin.play()
     }
 }
 
 setInterval(function () {
-    clock.innerHTML = ((new Date).toLocaleString().substr(11, 5));  
+    clock.innerHTML = ((new Date).toLocaleString().substr(11, 5));
 }, 1000);
-    
+
 
 $('.js-tilt').tilt({
     glare: true,

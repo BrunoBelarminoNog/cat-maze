@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="theme">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./assets/mazecat.ico" type="image/x-icon">
     <title>MAZE - Retrogames</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -109,8 +110,13 @@
                         <div>
                             <h3>Configurações</h3>
 
-                            <p class="selected effects">Efeitos sonoros</p><span>-</span><span
-                                class="active effects_on">ON</span><span class="effects_off">OFF</span>
+                            <div class="audio_settings option_settings">
+                                <p class="selected effects">Efeitos sonoros</p><span>-</span><span
+                                    class="active effects_on">ON</span><span class="effects_off">OFF</span>
+                            </div>
+                            <div class="theme_settings option_settings">
+                                <p>Temas</p><span>-</span><div class="theme_options"><span class="theme_classic theme_option active">Clássico</span><span class="theme_night theme_option">Noite</span><span class="theme_ferrari theme_option">Ferrari</span></div>
+                            </div>
                         </div>
                     </div>
 
@@ -176,7 +182,8 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="./tilt.jquery.min.js"></script>
     <script src="./script.js"></script>
 </body>

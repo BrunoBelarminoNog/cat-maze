@@ -140,6 +140,8 @@
 
 #screen #settings .selected {
     border-bottom: 3px solid rgb(58, 58, 58);
+    height: fit-content;
+    width: fit-content;
 }
 
 #screen #settings span {
@@ -150,6 +152,21 @@
 #screen #settings span.active {
     font-weight: bold;
     font-size: .6rem;
+}
+
+#screen #settings .theme_settings {
+    display: flex;
+    margin-top: 12px;
+}
+
+#screen #settings .theme_options {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+#screen #settings .theme_options span {
+    margin-bottom: 6px;
 }
 
 #screen #game {

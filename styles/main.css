@@ -1,13 +1,19 @@
 :root {
-    --theme-default-primary-color: ;
-    --theme-default-secondary-color: ;
-    --theme-default-tertiary-color: ;
-    --theme-night-primary-color: ;
-    --theme-night-secondary-color: ;
-    --theme-night-tertiary-color: ;    
-    --theme--ferrari-primary-color: ;
-    --theme-ferrari-secondary-color: ;
-    --theme-ferrari-tertiary-color: ;
+    --primary-color: #F5DCB4;
+    --secondary-color: #e5bf89;
+    --tertiary-color: #444444;
+}
+
+.theme-night:root {
+    --primary-color: #8d7cd4;
+    --secondary-color: #6B5EA2;
+    --tertiary-color: #370144;   
+}
+
+.theme-ferrari:root {
+    --primary-color: #e05353;
+    --secondary-color: #bb2a2a;
+    --tertiary-color: #F5E316; 
 }
 
 * {
@@ -18,8 +24,9 @@
 
 body {
     min-height: 100vh;
-    background-color: rgb(68, 68, 68);
+    background-color: var(--tertiary-color);
     position: relative;
+    transition: background-color 500ms;
 }
 
 body::before {
