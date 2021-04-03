@@ -538,6 +538,10 @@ function setConfiguration(event) {
         }
     }
 }
+const soundClick = new Audio("./assets/sounds/click.wav");
+const soundMove = new Audio("./assets/sounds/move.wav");
+const soundWin = new Audio("./assets/sounds/final-level.wav");
+
 
 function effectsSounds(effect) {
     if(!menu.settings[2].effects) {
@@ -545,13 +549,10 @@ function effectsSounds(effect) {
     }
 
     if(effect === "click") {
-        const soundClick = new Audio("./assets/sounds/click.wav");
         soundClick.play();
     } else if(effect === "move") {
-        const soundMove = new Audio("./assets/sounds/move.wav");
         soundMove.play()
     } else if(effect === "win") {
-        const soundWin = new Audio("./assets/sounds/final-level.wav");
         soundWin.play()
     }
 }
