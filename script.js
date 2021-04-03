@@ -38,10 +38,6 @@ const map = [
     "WWWWWWWWWWWWWWWWWWWWW",
 ];
 
-const soundClick = new Audio("./assets/sounds/click.wav");
-const soundMove = new Audio("./assets/sounds/move.wav");
-const soundWin = new Audio("./assets/sounds/final-level.wav");
-
 let menu = {
     main: true,
     selected: 0,
@@ -134,6 +130,10 @@ document.addEventListener('keyup', (e) => {
         btnUp.classList.remove('press_up')
     } else if (e.key === "ArrowDown") {
         btnDown.classList.remove('press_down')
+    } else if (e.key === "Enter") {
+        btnStart.classList.remove('press_btn_start')
+    } else if (e.key === "Delete") {
+        btnReset.classList.remove('press_reset')
     }
 })
 
@@ -180,6 +180,8 @@ function movePlayer(event) {
     }
 
     if(event.key === "Delete") {
+        btnReset.classList.add('press_reset')
+
         menu.playing = false;
         menu.main = true;
 
@@ -258,6 +260,7 @@ function checkResult(pixelMap) {
 
 function returnMainMenu(event) {
     if(event.key === "Enter" || event.key === "Delete") {
+        event.key === "Enter" ? btnStart.classList.add('press_btn_start') : btnReset.classList.add('press_reset')
         menu.winnerScreen = false
         menu.main = true
 
@@ -336,6 +339,8 @@ function selectOptionMenu(event) {
         }
 
     } else if (event.key === "Enter") {
+        btnStart.classList.add('press_btn_start')
+
         if(menu.selected === 0) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenGame.classList.remove('hidden');
@@ -366,6 +371,8 @@ function selectOptionMenu(event) {
 
 function setInstructions(event) {
     if(event.key === "Delete" ) {
+        btnReset.classList.add('press_reset')
+
         containerScreenInstructions.classList.add('hidden');
         containerScreenStartGame.classList.remove('hidden');
         menu.instructions = false;
@@ -392,6 +399,8 @@ function getConfiguration(event) {
     if(menu.settings[0]) {
 
         if(event.key === "Delete" ) {
+            btnReset.classList.add('press_reset')
+
             containerScreenSettings.classList.add('hidden');
             containerScreenStartGame.classList.remove('hidden');
             menu.settings[0] = false;
@@ -429,6 +438,7 @@ function getConfiguration(event) {
             btnUp.classList.add('press_up');
     
         } else if (event.key === "Enter") {
+            btnStart.classList.add('press_btn_start')
             effects.classList.remove('selected');
 
             if(menu.settings[2].effects) {
@@ -451,6 +461,8 @@ function setConfiguration(event) {
     if(menu.settings[1]) {
 
         if(event.key === "Delete" ) {
+            btnReset.classList.add('press_reset')
+
             containerScreenSettings.classList.add('hidden');
             effectsOff.classList.remove('selected');
             effectsOn.classList.remove('selected');
@@ -495,6 +507,7 @@ function setConfiguration(event) {
             btnUp.classList.add('press_up');
     
         } else if (event.key === "Enter") {
+            btnStart.classList.add('press_btn_start')
             
             if(menu.settings[2].selected === 0) {
                 effectsOff.classList.remove('active');
@@ -521,10 +534,13 @@ function effectsSounds(effect) {
     }
 
     if(effect === "click") {
+        const soundClick = new Audio("./assets/sounds/click.wav");
         soundClick.play();
     } else if(effect === "move") {
+        const soundMove = new Audio("./assets/sounds/move.wav");
         soundMove.play()
     } else if(effect === "win") {
+        const soundWin = new Audio("./assets/sounds/final-level.wav");
         soundWin.play()
     }
 }
