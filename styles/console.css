@@ -13,7 +13,10 @@
     display: flex;
     flex-direction: column;
     transition: all 400ms;
+    overflow: hidden;
+    transform-style: preserve-3d;
 }
+
 
 /*** Small devices ***/
 @media only screen and (min-width: 375px){

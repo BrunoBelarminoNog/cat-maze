@@ -1,3 +1,15 @@
+:root {
+    --theme-default-primary-color: ;
+    --theme-default-secondary-color: ;
+    --theme-default-tertiary-color: ;
+    --theme-night-primary-color: ;
+    --theme-night-secondary-color: ;
+    --theme-night-tertiary-color: ;    
+    --theme--ferrari-primary-color: ;
+    --theme-ferrari-secondary-color: ;
+    --theme-ferrari-tertiary-color: ;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +19,38 @@
 body {
     min-height: 100vh;
     background-color: rgb(68, 68, 68);
+    position: relative;
 }
 
+body::before {
+    content: "";
+    width: 50vmin;
+    height: 50vmin;
+    background: url(../assets/pixel-cat.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 50vh;
+    left: 22%;
+    transform: rotate(-20deg) translateY(-20%);
+    z-index: -1;
+    opacity: .1;
+}
+
+body::after {
+    content: "";
+    width: 50vmin;
+    height: 50vmin;
+    background: url(../assets/pixel-cat.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 18%;
+    right: 22%;
+    transform: rotate(20deg) translateY(-20%);
+    z-index: -1;
+    opacity: .1;
+}
 .container {
     width: 100vw;
     max-width: 900px;
@@ -22,4 +64,11 @@ body {
 .hidden {
     display: none !important;
     visibility: hidden;
+}
+
+/*** Extra large devices ***/
+@media only screen and (min-width: 1200px) { 
+    body {
+        overflow: hidden;
+    }
 }

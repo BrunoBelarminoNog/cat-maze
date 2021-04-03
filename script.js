@@ -151,6 +151,7 @@ function movePlayer(event) {
 
     if (event.key === "ArrowUp") {
         btnUp.classList.add('press_up');
+
        if(map[position[0] - 1][position[1]] === "W" || position[0] === 0) {
            event.preventDefault()
         } else {
@@ -197,14 +198,24 @@ function movePlayer(event) {
         position = [9, 0]
     }
 
-    renderPosition(position)
+    renderPosition(position, event)
 }
 
-function renderPosition(position) {
+function renderPosition(position, event) {
     const pixelGame = (position[0] * 21) + (position[1])
 
     mapGame[previousPixelGame].classList.remove('player')
     mapGame[pixelGame].classList.add('player')
+
+    if (event.key === "ArrowUp") {
+        mapGame[pixelGame].classList.add('moveUp');
+    } else if (event.key === "ArrowRight") {
+        mapGame[pixelGame].classList.add('moveRight');
+    } else if (event.key === "ArrowDown") {
+        mapGame[pixelGame].classList.add('moveDown');
+    } else if (event.key === "ArrowLeft") {
+        mapGame[pixelGame].classList.add('moveLeft');
+    }
 
     previousPixelGame = pixelGame
 
@@ -549,3 +560,8 @@ setInterval(function () {
     clock.innerHTML = ((new Date).toLocaleString().substr(11, 5));  
 }, 1000);
     
+
+$('.js-tilt').tilt({
+    glare: true,
+    maxGlare: .4
+})
