@@ -89,10 +89,21 @@
                         <h2>CATmaze</h2>
                         <div>
                             <p class="option_menu selected">Novo jogo</p>
+                            <p class="option_menu">Ranking</p>
                             <p class="option_menu">Como jogar</p>
                             <p class="option_menu">Configurações</p>
                         </div>
                         <h4>Retrogames<span>&reg;</span></h4>
+                    </div>
+
+                    <div id="records" class="hidden">
+                        <div>
+                            <h3>Ranking</h3>
+                            
+                            <div class="records_times">
+
+                            </div>
+                        </div>
                     </div>
 
                     <div id="instructions" class="hidden">
@@ -128,7 +139,8 @@
 
                     <div id="win_game" class="hidden">
                         <div>
-                            <h2>VOCÊ GANHOU!!!</h2>
+                            <h2 class="alert_win">VOCÊ GANHOU!!!</h2>
+                            <h2 class="alert_record hidden">NOVO RECORD!!!</h2>
                             <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_zEkQFc.json"
                                 background="transparent" speed="1" class="lotie-file" loop autoplay></lottie-player>
                         </div>
@@ -165,7 +177,7 @@
                             <span>START</span>
                         </div>
                         <div class="reset" title="Usar o DELETE do teclado">
-                            <span>RESET</span>
+                            <span>BACK</span>
                         </div>
                     </div>
                 </div>

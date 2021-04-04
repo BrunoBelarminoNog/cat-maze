@@ -1,11 +1,14 @@
 const containerScreenGame = document.getElementById('game');
 const containerScreenStartGame = document.getElementById('play');
+const containerScreenRecords = document.getElementById('records');
 const containerScreenInstructions = document.getElementById('instructions');
 const containerScreenSettings = document.getElementById('settings');
 const containerScreenWinGame = document.getElementById('win_game');
 const containerMapGame = document.getElementById('container_map_game');
 const containerTimerGame = document.getElementById('timer');
-const contentTimer = document.getElementById('timer_game')
+const contentTimer = document.getElementById('timer_game');
+const alertWin = document.querySelector('.alert_win');
+const alertRecord = document.querySelector('.alert_record')
 const btnUp = document.querySelector('.up');
 const btnDown = document.querySelector('.down');
 const btnRight = document.querySelector('.right');
@@ -25,50 +28,13 @@ const iconEffectOn = document.querySelector('#effects_notification .icon_effects
 const iconEffectOff = document.querySelector('#effects_notification .icon_effects-off');
 const clock = document.getElementById('clock');
 
-const map = [
-    "WWWWWWWWWWWWWWWWWWWWW",
-    "W   W     W     W W W",
-    "W W W WWW WWWWW W W W",
-    "W W W   W     W W   W",
-    "W WWWWWWW W WWW W W W",
-    "W         W     W W W",
-    "W WWW WWWWW WWWWW W W",
-    "W W   W   W W     W W",
-    "W WWWWW W W W WWW W F",
-    "S     W W W W W W WWW",
-    "WWWWW W W W W W W W W",
-    "W     W W W   W W W W",
-    "W WWWWWWW WWWWW W W W",
-    "W       W       W   W",
-    "WWWWWWWWWWWWWWWWWWWWW",
-];
-
-// let menu = {
-//     main: true,
-//     selected: 0,
-//     playing: false,
-//     instructions: false,
-//     settings: [
-//         false,
-//         false,
-//         {
-//             effects: true,
-//             selected: 0
-//         },
-//         {
-//             themes: ['default', 'night', 'ferrari'],
-//             selected: 0
-//         }
-//     ],
-//     winnerScreen: false
-// }
-
 const Menu = {
     main: {
         show: true,
         selected: 0
     },
     playing: false,
+    records: false,
     instructions: false,
     settings: {
         show: false,
@@ -87,13 +53,68 @@ const Menu = {
     winnerScreen: false
 }
 
+const Record = {
+    records: [],
+    setRecord: (records) => {
+        localStorage.setItem('records', records)
+    },
+    getRecord: () => {
+        const result = localStorage.getItem('records')
 
+        if(result) {
+            Record.records = result.split(",")
+        }
+
+        return result
+    },
+    isRecord: (time) => {
+        if(Record.records) {
+            if(time < Math.max(...Record.records) || Record.records.length < 3) {
+
+                if(Record.records.length === 3) Record.records.pop()
+    
+                Record.records.push(time)
+    
+                Record.records.sort((a, b) => a - b)
+                Record.setRecord(Record.records)
+    
+                return true
+            }
+        } else {
+            Record.records = [time]
+            Record.setRecord(Record.records)
+    
+            return true
+        }
+        
+        return false
+    }
+}
+Record.getRecord()
+
+let recordGame = false
 let timer
 let time = null;
-let maxTimer = true
 let min = 0
 let sec = 0
 
+const map = [
+    "WWWWWWWWWWWWWWWWWWWWW",
+    "W   W     W     W W W",
+    "W W W WWW WWWWW W W W",
+    "W W W   W     W W   W",
+    "W WWWWWWW W WWW W W W",
+    "W         W     W W W",
+    "W WWW WWWWW WWWWW W W",
+    "W W   W   W W     W W",
+    "W WWWWW W W W WWW W F",
+    "S     W W W W W W WWW",
+    "WWWWW W W W W W W W W",
+    "W     W W W   W W W W",
+    "W WWWWWWW WWWWW W W W",
+    "W       W       W   W",
+    "WWWWWWWWWWWWWWWWWWWWW",
+];
 
 map.forEach((element) => {
     const line = element.split("")
@@ -138,6 +159,12 @@ document.addEventListener('keydown', (event) => {
     if (Menu.winnerScreen) {
         effectsSounds('click')
         returnMainMenu(event)
+        return
+    }
+
+    if(Menu.records) {
+        effectsSounds('click')
+        setRecords(event)
         return
     }
 
@@ -224,15 +251,14 @@ function movePlayer(event) {
     if (event.key === "Delete") {
         btnReset.classList.add('press_reset')
 
-        menu.playing = false;
-        menu.main = true;
+        Menu.playing = false;
+        Menu.main.show = true;
 
         clearInterval(timer)
         time = null
         contentTimer.innerHTML = "0:00"
 
         containerTimerGame.classList.add('hidden');
-
         containerScreenGame.classList.add('hidden');
         containerScreenStartGame.classList.remove('hidden')
 
@@ -248,16 +274,18 @@ function renderPosition(position, event) {
     mapGame[previousPixelGame].classList.remove('player')
     mapGame[pixelGame].classList.add('player')
 
-    if (event.key === "ArrowUp") {
-        mapGame[pixelGame].classList.add('moveUp');
-    } else if (event.key === "ArrowRight") {
-        mapGame[pixelGame].classList.add('moveRight');
-    } else if (event.key === "ArrowDown") {
-        mapGame[pixelGame].classList.add('moveDown');
-    } else if (event.key === "ArrowLeft") {
-        mapGame[pixelGame].classList.add('moveLeft');
+    if(event) {
+        if (event.key === "ArrowUp") {
+            mapGame[pixelGame].classList.add('moveUp');
+        } else if (event.key === "ArrowRight") {
+            mapGame[pixelGame].classList.add('moveRight');
+        } else if (event.key === "ArrowDown") {
+            mapGame[pixelGame].classList.add('moveDown');
+        } else if (event.key === "ArrowLeft") {
+            mapGame[pixelGame].classList.add('moveLeft');
+        }
     }
-
+    
     previousPixelGame = pixelGame
 
     checkResult(pixelGame)
@@ -298,9 +326,19 @@ function checkResult(pixelMap) {
 
         clearInterval(timer)
 
+        recordGame = Record.isRecord(time - 1)
+
         setTimeout(() => {
             effectsSounds('win')
         }, 500)
+
+        if(recordGame) {
+            alertRecord.classList.remove('hidden');
+            alertWin.classList.add('hidden');
+        } else {
+            alertRecord.classList.add('hidden');
+            alertWin.classList.remove('hidden');
+        }
 
         Menu.playing = false
         Menu.winnerScreen = true
@@ -317,6 +355,7 @@ function returnMainMenu(event) {
         Menu.main.show = true
 
         time = null
+        recordGame = false
         contentTimer.innerHTML = "0:00"
 
         containerTimerGame.classList.add('hidden');
@@ -340,9 +379,14 @@ function selectOptionMenu(event) {
             optionsMenu[1].classList.add('selected');
 
             Menu.main.selected = 1
-        } else {
-            event.preventDefault()
+        } else if (Menu.main.selected === 3){
+            optionsMenu[3].classList.remove('selected')
+            optionsMenu[2].classList.add('selected')
+
+            Menu.main.selected = 2
         }
+
+        event.preventDefault();
 
     } else if (event.key === "ArrowDown") {
         btnDown.classList.add('press_down');
@@ -357,10 +401,14 @@ function selectOptionMenu(event) {
             optionsMenu[2].classList.add('selected')
 
             Menu.main.selected = 2
-        } else {
-            event.preventDefault()
+        } else if (Menu.main.selected === 2){
+            optionsMenu[2].classList.remove('selected')
+            optionsMenu[3].classList.add('selected')
+
+            Menu.main.selected = 3
         }
 
+        event.preventDefault();
     } else if (event.key === "ArrowLeft") {
         btnLeft.classList.add('press_left')
 
@@ -377,12 +425,20 @@ function selectOptionMenu(event) {
 
             event.preventDefault()
         } else if (Menu.main.selected === 1) {
+            updateRecords();
+
+            containerScreenStartGame.classList.add('hidden');
+            containerScreenRecords.classList.remove('hidden');
+            Menu.records = true
+            Menu.main.show = false;
+            event.preventDefault()
+        } else if (Menu.main.selected === 2) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenInstructions.classList.remove('hidden');
             Menu.instructions = true;
             Menu.main.show = false;
             event.preventDefault()
-        } else if (Menu.main.selected === 2) {
+        } else if (Menu.main.selected === 3) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenSettings.classList.remove('hidden');
             Menu.settings.show = true;
@@ -404,12 +460,20 @@ function selectOptionMenu(event) {
 
             event.preventDefault()
         } else if (Menu.main.selected === 1) {
+            updateRecords();
+
+            containerScreenStartGame.classList.add('hidden');
+            containerScreenRecords.classList.remove('hidden');
+            Menu.records = true
+            Menu.main.show = false;
+            event.preventDefault()
+        } else if (Menu.main.selected === 2) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenInstructions.classList.remove('hidden');
             Menu.instructions = true;
             Menu.main.show = false;
             event.preventDefault()
-        } else if (Menu.main.selected === 2) {
+        } else if (Menu.main.selected === 3) {
             containerScreenStartGame.classList.add('hidden');
             containerScreenSettings.classList.remove('hidden');
             Menu.settings.show = true;
@@ -419,6 +483,33 @@ function selectOptionMenu(event) {
 
     } else if (event.key === "Delete") {
         btnReset.classList.add('press_reset');
+    }
+}
+
+function setRecords(event) {
+    if (event.key === "Delete") {
+        btnReset.classList.add('press_reset')
+
+        containerScreenRecords.classList.add('hidden');
+        containerScreenStartGame.classList.remove('hidden');
+        Menu.records = false;
+
+        Menu.main.show = true
+    } else if (event.key === "ArrowLeft") {
+        btnLeft.classList.add('press_left')
+
+        containerScreenRecords.classList.add('hidden');
+        containerScreenStartGame.classList.remove('hidden');
+        Menu.records = false;
+        Menu.main.show = true
+    } else if (event.key === "ArrowRight") {
+        btnRight.classList.add('press_right')
+    } else if (event.key === "ArrowDown") {
+        btnDown.classList.add('press_down');
+    } else if (event.key === "ArrowUp") {
+        btnUp.classList.add('press_up');
+    } else if (event.key === "Enter") {
+        btnStart.classList.add('press_btn_start')
     }
 }
 
@@ -725,3 +816,50 @@ $('.js-tilt').tilt({
     glare: true,
     maxGlare: .4
 })
+
+
+function updateRecords() {
+    containerScreenRecords.querySelector('.records_times').innerHTML = ""
+    let minutes
+    let seconds
+    
+    if(Record.records.length === 0) {
+        containerScreenRecords.querySelector('.records_times').innerHTML = `<p>Ainda não possui nenhum record gravado!</p>`
+    }
+
+    Record.records.forEach((el, index) => {
+        const containerRank = document.createElement('div');
+        const rankIndex = document.createElement('span');
+        const rankContent = document.createElement('span');
+
+
+        containerRank.classList.add('record_item');
+        rankIndex.classList.add('record_index');
+        rankContent.classList.add('record_content');
+
+
+        if (el >= 60) {
+
+            minutes = Math.floor(el / 60)
+            seconds = time - (minutes * 60)
+            if (seconds < 10) {
+                seconds = `0${seconds}`
+            }
+        }
+    
+        if (el < 60 && el > 0) {
+            minutes = `00`
+            seconds = el
+            if (seconds < 10) {
+                seconds = `0${seconds}`
+            }
+        }
+
+        rankIndex.innerText = `${index + 1}º - `
+        rankContent.innerText = `${minutes}:${seconds}`
+        
+        containerRank.appendChild(rankIndex);
+        containerRank.appendChild(rankContent);
+        containerScreenRecords.querySelector('.records_times').appendChild(containerRank);
+    })
+}
