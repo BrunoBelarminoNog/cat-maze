@@ -33,7 +33,7 @@ body::before {
     content: "";
     width: 50vmin;
     height: 50vmin;
-    background: url(../assets/pixel-cat.png);
+    background: url(../assets/images/pixel-cat.png);
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
@@ -48,7 +48,7 @@ body::after {
     content: "";
     width: 50vmin;
     height: 50vmin;
-    background: url(../assets/pixel-cat.png);
+    background: url(../assets/images/pixel-cat.png);
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
