@@ -21,8 +21,7 @@
 
 .console-inner.flip {
     transform: rotateY(180deg);
-  }
-
+}
 
 .console-front, .console-back {
     border-radius: 6px 6px 6px 80px;
@@ -52,16 +51,6 @@
     font-family: 'Press Start 2P', cursive;
     filter: hue-rotate(0);
     box-shadow: inset 10px 10px 100px  rgba(0, 0, 0, 0.514);
-    animation: colorHue 15s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes colorHue{
-    from {
-        filter: hue-rotate(0);
-    }
-    to {
-        filter: hue-rotate(320deg);
-    }
 }
 
 .console-back #help {
@@ -123,7 +112,7 @@
     bottom: -40px;
     left: -110px;
     right: 0;
-    box-shadow: 0px 0px 20px -1px rgba(0, 0, 0, 0.459);
+    box-shadow: 0px 0px 40px -1px rgba(0, 0, 0, 0.459);
     transform: rotate(-10deg) translateY(170px) translateX(-150px);
     transition: transform 400ms;
 }
@@ -186,13 +175,43 @@
 
     .console-front {
         padding: .8rem 1rem 2rem;
-
         box-shadow: inset 200px -30px 0px 20px var(--secondary-color),
                             0px 0px 50px -5px rgba(255, 255, 255, 0.3);
     }
 
     .console-back #help img + p {
         font-size: .7rem;
+    }
+
+    .console-inner.flip .console-back #bio {
+        animation: bioVibra .5s .9s backwards, colorHue 5s 1.2s ease-in-out infinite alternate-reverse;
+    }
+       
+    @keyframes bioVibra {
+        0% {
+            transform: rotate(-10deg) translateY(170px) translateX(-150px);
+        }
+        25%{
+            transform: rotate(-10deg) translateY(180px) translateX(-150px);
+        }   
+        50% {
+            transform: rotate(-10deg) translateY(170px) translateX(-150px);
+        }
+        75% {
+            transform: rotate(-10deg) translateY(180px) translateX(-150px);
+        }
+        100% {
+            transform: rotate(-10deg) translateY(170px) translateX(-150px);
+        }   
+    }
+
+    @keyframes colorHue{
+        from {
+            filter: hue-rotate(0);
+        }
+        to {
+            filter: hue-rotate(320deg);
+        }
     }
 }
 
@@ -214,6 +233,14 @@
         background-color: var(--secondary-color);
     }
 
+    .console-back #bio {
+        transform: rotate(-10deg) translateY(170px) translateX(-150px);
+    }
+    
+    .console-back #bio:hover {
+        transform: rotate(-10deg) translateY(60px) translateX(-10px);
+    }
+
     .console-back #bio h5 {
         font-size: 1.2rem;
     }
@@ -224,13 +251,5 @@
     
     .console-back #bio img {
         width: 50px;
-    }
-
-    .console-back #bio {
-        transform: rotate(-10deg) translateY(170px) translateX(-150px);
-    }
-    
-    .console-back #bio:hover {
-        transform: rotate(-10deg) translateY(60px) translateX(-10px);
     }
 }

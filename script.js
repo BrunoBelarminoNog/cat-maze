@@ -15,7 +15,7 @@ const btnDown = document.querySelector('.down');
 const btnRight = document.querySelector('.right');
 const btnLeft = document.querySelector('.left');
 const btnStart = document.querySelector('.btn_start');
-const btnReset = document.querySelector('.reset');
+const btnReset = document.querySelector('.btn_reset');
 const optionsMenu = document.querySelectorAll('.option_menu');
 const optionsSettings = document.querySelectorAll('.option_settings');
 const themeOptions = document.querySelectorAll('.theme_option');
@@ -844,14 +844,12 @@ setInterval(function () {
     clock.innerHTML = ((new Date).toLocaleString().substr(11, 5));
 }, 1000);
 
-
 $('.js-tilt').tilt({
     glare: true,
     maxGlare: .4,
     perspective: 800,
     speed: 1000
 })
-
 
 function updateRecords() {
     containerScreenRecords.querySelector('.records_times').innerHTML = ""
@@ -866,7 +864,6 @@ function updateRecords() {
         const containerRank = document.createElement('div');
         const rankIndex = document.createElement('span');
         const rankContent = document.createElement('span');
-
 
         containerRank.classList.add('record_item');
         rankIndex.classList.add('record_index');
@@ -901,7 +898,6 @@ function updateRecords() {
         containerScreenRecords.querySelector('.records_times').appendChild(containerRank);
     })
 }
-
 
 containerConsole.addEventListener('click', () => {
     containerConsole.querySelector('.console-inner').classList.toggle('flip')

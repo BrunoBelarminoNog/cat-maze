@@ -208,7 +208,7 @@
     height: 100%;
     position: absolute;
     border-radius: 50%;
-    background: url(../assets/pixel-cat.png) no-repeat;
+    background: url(../assets/images/pixel-cat.png) no-repeat;
     background-size: contain;
     z-index: 100;
 }
