@@ -10,10 +10,10 @@
     --tertiary-color: #370144;   
 }
 
-.theme-ferrari:root {
-    --primary-color: #e05353;
-    --secondary-color: #bb2a2a;
-    --tertiary-color: #F5E316; 
+.theme-sweet:root {
+    --primary-color: #f5b2f1;
+    --secondary-color: #df27b7;
+    --tertiary-color: #c0f1fa; 
 }
 
 * {

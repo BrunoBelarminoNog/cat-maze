@@ -1,3 +1,4 @@
+const containerConsole = document.querySelector('.console')
 const containerScreenGame = document.getElementById('game');
 const containerScreenStartGame = document.getElementById('play');
 const containerScreenRecords = document.getElementById('records');
@@ -20,7 +21,7 @@ const optionsSettings = document.querySelectorAll('.option_settings');
 const themeOptions = document.querySelectorAll('.theme_option');
 const themeClassic = document.querySelector('.theme_classic');
 const themeNight = document.querySelector('.theme_night');
-const themeFerrari = document.querySelector('.theme_ferrari');
+const themeSweet = document.querySelector('.theme_sweet');
 const effects = document.querySelector('.effects')
 const effectsOn = document.querySelector('.effects_on');
 const effectsOff = document.querySelector('.effects_off');
@@ -46,7 +47,7 @@ const Menu = {
         },
         themes: {
             show: false,
-            list: ['default', 'night', 'ferrari'],
+            list: ['default', 'night', 'sweet'],
             selected: 0
         }
     },
@@ -92,55 +93,18 @@ const Record = {
 }
 Record.getRecord()
 
+let map 
+let mapGame
+let totalPixelsGame
+let previousPixelGame
+let finalPixelGame
+let position
+
 let recordGame = false
 let timer
 let time = null;
 let min = 0
 let sec = 0
-
-const map = [
-    "WWWWWWWWWWWWWWWWWWWWW",
-    "W   W     W     W W W",
-    "W W W WWW WWWWW W W W",
-    "W W W   W     W W   W",
-    "W WWWWWWW W WWW W W W",
-    "W         W     W W W",
-    "W WWW WWWWW WWWWW W W",
-    "W W   W   W W     W W",
-    "W WWWWW W W W WWW W F",
-    "S     W W W W W W WWW",
-    "WWWWW W W W W W W W W",
-    "W     W W W   W W W W",
-    "W WWWWWWW WWWWW W W W",
-    "W       W       W   W",
-    "WWWWWWWWWWWWWWWWWWWWW",
-];
-
-map.forEach((element) => {
-    const line = element.split("")
-    line.map(e => {
-        const containerCell = document.createElement('div')
-
-        if (e === "W") {
-            containerCell.classList.add('wall')
-            containerCell.classList.add('pixel')
-        } else if (e === "S") {
-            containerCell.classList.add('start')
-            containerCell.classList.add('player')
-            containerCell.classList.add('floor')
-            containerCell.classList.add('pixel')
-        } else if (e === "F") {
-            containerCell.classList.add('finished')
-            containerCell.classList.add('floor')
-            containerCell.classList.add('pixel')
-        } else {
-            containerCell.classList.add('floor')
-            containerCell.classList.add('pixel')
-        }
-
-        containerMapGame.appendChild(containerCell)
-    })
-})
 
 document.addEventListener('keydown', (event) => {
 
@@ -205,15 +169,68 @@ document.addEventListener('keyup', (e) => {
     }
 })
 
+function currentMap() {
+    let previousMap = localStorage.getItem('mapID')
+    previousMap ? previousMap = parseInt(previousMap) : null
+    
+    if(previousMap === null || previousMap === 5) {
+        previousMap = 0
+        localStorage.setItem('mapID', previousMap)
 
-let position = ""
-map.forEach((e, i) => {
-    e.indexOf('S') !== -1 ? position = [i, e.indexOf('S')] : null
-})
+        return previousMap
+    }
 
-const mapGame = document.querySelectorAll('.pixel')
-const totalPixelsGame = (map[0].length * map.length)
-let previousPixelGame = 189
+    const currentMap = previousMap + 1
+    localStorage.setItem('mapID', currentMap);
+
+    return currentMap
+}   
+
+function newGame() {
+    containerMapGame.innerHTML = "";
+
+    const mapId = currentMap()
+    map = maps[mapId]
+
+    map.forEach((element) => {
+        const line = element.split("")
+        line.map(e => {
+            const containerCell = document.createElement('div')
+    
+            if (e === "W") {
+                containerCell.classList.add('wall')
+                containerCell.classList.add('pixel')
+            } else if (e === "S") {
+                containerCell.classList.add('start')
+                containerCell.classList.add('player')
+                containerCell.classList.add('floor')
+                containerCell.classList.add('pixel')
+            } else if (e === "F") {
+                containerCell.classList.add('finished')
+                containerCell.classList.add('floor')
+                containerCell.classList.add('pixel')
+            } else {
+                containerCell.classList.add('floor')
+                containerCell.classList.add('pixel')
+            }
+    
+            containerMapGame.appendChild(containerCell)
+        })
+    })
+
+    let endPosition
+
+    map.forEach((e, i) => {
+        e.indexOf('S') !== -1 ? position = [i, e.indexOf('S')] : null
+        e.indexOf('F') !== -1 ? endPosition = [i, e.indexOf('F')] : null
+
+    })
+
+    mapGame = document.querySelectorAll('.pixel');
+    totalPixelsGame = (map[0].length * map.length);
+    previousPixelGame = position[0] * 21 + position[1];
+    finalPixelGame = endPosition[0] * 21 + endPosition[1]
+}
 
 function movePlayer(event) {
 
@@ -272,17 +289,30 @@ function renderPosition(position, event) {
     const pixelGame = (position[0] * 21) + (position[1])
 
     mapGame[previousPixelGame].classList.remove('player')
+    mapGame[previousPixelGame].classList.remove('moveUp')
+    mapGame[previousPixelGame].classList.remove('moveRight')
+    mapGame[previousPixelGame].classList.remove('moveDown')
+    mapGame[previousPixelGame].classList.remove('moveLeft')
+
     mapGame[pixelGame].classList.add('player')
 
     if(event) {
         if (event.key === "ArrowUp") {
             mapGame[pixelGame].classList.add('moveUp');
+            setTimeout (()=>{
+            }, 100)
         } else if (event.key === "ArrowRight") {
             mapGame[pixelGame].classList.add('moveRight');
+            setTimeout (()=>{
+            }, 100)
         } else if (event.key === "ArrowDown") {
             mapGame[pixelGame].classList.add('moveDown');
+            setTimeout (()=>{
+            }, 100)
         } else if (event.key === "ArrowLeft") {
             mapGame[pixelGame].classList.add('moveLeft');
+            setTimeout (()=>{
+            }, 100)
         }
     }
     
@@ -320,7 +350,7 @@ function timerGame() {
 }
 
 function checkResult(pixelMap) {
-    if (pixelMap === 188) {
+    if (pixelMap === finalPixelGame) {
         containerScreenGame.classList.add('hidden');
         containerScreenWinGame.classList.remove('hidden');
 
@@ -415,6 +445,8 @@ function selectOptionMenu(event) {
     } else if (event.key === "ArrowRight") {
         btnRight.classList.add('press_right')
         if (Menu.main.selected === 0) {
+            newGame()
+
             containerScreenStartGame.classList.add('hidden');
             containerScreenGame.classList.remove('hidden');
             Menu.playing = true;
@@ -450,6 +482,7 @@ function selectOptionMenu(event) {
         btnStart.classList.add('press_btn_start')
 
         if (Menu.main.selected === 0) {
+            newGame()
             containerScreenStartGame.classList.add('hidden');
             containerScreenGame.classList.remove('hidden');
             Menu.playing = true;
@@ -590,7 +623,7 @@ function getConfiguration(event) {
             } else if (Menu.settings.themes.selected === 1) {
                 themeNight.classList.add('selected')
             } else if (Menu.settings.themes.selected === 2) {
-                themeFerrari.classList.add('selected')
+                themeSweet.classList.add('selected')
             }
 
             Menu.settings.themes.show = true
@@ -645,7 +678,7 @@ function getConfiguration(event) {
             } else if (Menu.settings.themes.selected === 1) {
                 themeNight.classList.add('selected')
             } else if (Menu.settings.themes.selected === 2) {
-                themeFerrari.classList.add('selected')
+                themeSweet.classList.add('selected')
             }
 
             Menu.settings.themes.show = true
@@ -665,7 +698,7 @@ function setConfiguration(event) {
         effectsOn.classList.remove('selected');
         themeClassic.classList.remove('selected');
         themeNight.classList.remove('selected');
-        themeFerrari.classList.remove('selected');
+        themeSweet.classList.remove('selected');
         containerScreenStartGame.classList.remove('hidden');
         optionsSettings[0].querySelector('p').classList.add('selected');
         optionsSettings[1].querySelector('p').classList.remove('selected');
@@ -814,7 +847,9 @@ setInterval(function () {
 
 $('.js-tilt').tilt({
     glare: true,
-    maxGlare: .4
+    maxGlare: .4,
+    perspective: 800,
+    speed: 1000
 })
 
 
@@ -841,7 +876,10 @@ function updateRecords() {
         if (el >= 60) {
 
             minutes = Math.floor(el / 60)
-            seconds = time - (minutes * 60)
+            if(minutes < 60) {
+                minutes = `0${minutes}`
+            }
+            seconds = el - (minutes * 60)
             if (seconds < 10) {
                 seconds = `0${seconds}`
             }
@@ -863,3 +901,8 @@ function updateRecords() {
         containerScreenRecords.querySelector('.records_times').appendChild(containerRank);
     })
 }
+
+
+containerConsole.addEventListener('click', () => {
+    containerConsole.querySelector('.console-inner').classList.toggle('flip')
+})
