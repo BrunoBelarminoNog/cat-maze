@@ -47,7 +47,7 @@
 .console-back {
     transform: rotateY(180deg);
     border-radius: 6px 6px 80px 6px;
-    border: 10px solid transparent;
+    border: 10px solid #000;
     justify-content: space-around;
     font-family: 'Press Start 2P', cursive;
     filter: hue-rotate(0);
@@ -91,16 +91,16 @@
 }
 
 .console-back #help img {
-    height: 60px;
+    height: 12vmin;
+    max-height: 60px;
     margin-bottom: 12px;
     transition: transform 400ms;
 }
 
 .console-back #help img + p {
-    font-size: .7rem;
+    font-size: .5rem;
     transition: transform 400ms;
     transform: scale(.9);
-
 }
 
 .console-back #help img:hover {
@@ -118,36 +118,36 @@
     justify-content: center;
     background-color: rgba(104, 13, 13, 0.219);
     height: 300px;
-    width: 700px;
+    width: 800px;
     position: absolute;
     bottom: -40px;
     left: -110px;
     right: 0;
-    box-shadow: 0px 0px 20px -2px rgba(0, 0, 0, 0.459);
-    transform: rotate(-10deg) translateY(170px) translateX(-15px);
+    box-shadow: 0px 0px 20px -1px rgba(0, 0, 0, 0.459);
+    transform: rotate(-10deg) translateY(170px) translateX(-150px);
     transition: transform 400ms;
 }
 
 .console-back #bio:hover {
-    transform: rotate(-10deg) translateY(60px) translateX(-15px);
+    transform: rotate(-10deg) translateY(60px) translateX(-30px);
 }
 
 .console-back #bio div {
-    transform: rotate(10deg) translateY(-40px);
+    transform: rotate(10deg) translateY(-40px)  translateX(-50px);
 }
 
 .console-back #bio .bio_redes {
     display: flex;
     margin-left: 12px;
-    transform: rotate(10deg) translateY(0px);
+    transform: rotate(10deg) translateY(0px) translateX(-50px);
 }
 
 .console-back #bio h5 {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .console-back #bio h6 {
-    font-size: .72rem;
+    font-size: .5rem;
 }
 
 .console-back #bio img {
@@ -162,21 +162,19 @@
 
 /*** Small devices ***/
 @media only screen and (min-width: 375px){
-    /* .console-front, .console-back  {
-    } */
-
     .console-front {
         box-shadow: inset 170px -30px 0px 20px var(--secondary-color);
         border: 12px solid #000;
         padding: .8rem 1rem 1.5rem; 
-
-        
     }
 
     .console-back {
         border: 12px solid #000;
     }
 
+    .console-back #help img + p {
+        font-size: .6rem;
+    }
 }
 
 /*** Medium devices ***/
@@ -186,9 +184,6 @@
         height: 700px;
     }
 
-    /* .console-front, .console-back {
-    } */
-
     .console-front {
         padding: .8rem 1rem 2rem;
 
@@ -196,6 +191,9 @@
                             0px 0px 50px -5px rgba(255, 255, 255, 0.3);
     }
 
+    .console-back #help img + p {
+        font-size: .7rem;
+    }
 }
 
 /*** Extra large devices ***/
@@ -214,5 +212,25 @@
 
     .console-back {
         background-color: var(--secondary-color);
+    }
+
+    .console-back #bio h5 {
+        font-size: 1.2rem;
+    }
+    
+    .console-back #bio h6 {
+        font-size: .72rem;
+    }
+    
+    .console-back #bio img {
+        width: 50px;
+    }
+
+    .console-back #bio {
+        transform: rotate(-10deg) translateY(170px) translateX(-150px);
+    }
+    
+    .console-back #bio:hover {
+        transform: rotate(-10deg) translateY(60px) translateX(-10px);
     }
 }
