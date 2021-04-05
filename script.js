@@ -28,6 +28,11 @@ const effectsOff = document.querySelector('.effects_off');
 const iconEffectOn = document.querySelector('#effects_notification .icon_effects-on');
 const iconEffectOff = document.querySelector('#effects_notification .icon_effects-off');
 const clock = document.getElementById('clock');
+const soundClick = new Audio("./assets/sounds/click.wav");
+const soundMove = new Audio("./assets/sounds/move.wav");
+const soundWin = new Audio("./assets/sounds/final-level.wav");
+const meowA = new Audio("./assets/sounds/kitty-meow.wav");
+const meowB = new Audio("./assets/sounds/attention-meow.wav");
 
 const Menu = {
     main: {
@@ -821,10 +826,6 @@ function setConfiguration(event) {
     }
 
 }
-const soundClick = new Audio("./assets/sounds/click.wav");
-const soundMove = new Audio("./assets/sounds/move.wav");
-const soundWin = new Audio("./assets/sounds/final-level.wav");
-
 
 function effectsSounds(effect) {
     if (!Menu.settings.effects.turned_on) {
@@ -899,6 +900,14 @@ function updateRecords() {
     })
 }
 
+let audioMeowControl = 0
 containerConsole.addEventListener('click', () => {
     containerConsole.querySelector('.console-inner').classList.toggle('flip')
+    if(audioMeowControl === 0) {
+        meowA.play()
+        audioMeowControl = 1
+    } else {
+        meowB.play()
+        audioMeowControl = 0
+    }
 })
