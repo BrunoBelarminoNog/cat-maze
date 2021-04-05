@@ -32,6 +32,9 @@ const soundClick = new Audio("./assets/sounds/click.wav");
 const soundMove = new Audio("./assets/sounds/move.wav");
 const soundWin = new Audio("./assets/sounds/final_level.wav");
 const meow = new Audio("./assets/sounds/attention-meow.wav");
+const helpKeyboardArrows = document.querySelector('.keyboard_arrows');
+const helpKeyboardEnter = document.querySelector('.keyboard_enter');
+const helpKeyboardDelete = document.querySelector('.keyboard_delete');
 
 const Menu = {
     main: {
@@ -55,7 +58,8 @@ const Menu = {
             selected: 0
         }
     },
-    winnerScreen: false
+    winnerScreen: false,
+    consoleBack: false
 }
 
 const Record = {
@@ -151,6 +155,12 @@ document.addEventListener('keydown', (event) => {
     if (Menu.settings.show && (Menu.settings.effects.show || Menu.settings.themes.show)) {
         effectsSounds('click')
         setConfiguration(event)
+        return
+    }
+
+    if(Menu.consoleBack) {
+        effectsSounds('click')
+        navConsoleBack(event)
         return
     }
 
@@ -268,6 +278,10 @@ function movePlayer(event) {
             position[1] = position[1] + 1
         }
     }
+    
+    if(event.key === "Enter") {
+        btnStart.classList.add('press_btn_start')
+    }
 
     if (event.key === "Delete") {
         btnReset.classList.add('press_reset')
@@ -285,6 +299,7 @@ function movePlayer(event) {
 
         position = [9, 0]
     }
+
 
     renderPosition(position, event)
 }
@@ -900,8 +915,46 @@ function updateRecords() {
 }
 
 let audioMeowControl = 0
+let controlFlip
+
 containerConsole.addEventListener('click', () => {
     containerConsole.querySelector('.console-inner').classList.toggle('flip')
+    
+    if(Menu.main.show) {
+        Menu.main.show = false;
+        Menu.consoleBack = true;    
+        controlFlip = 'main'
+    } else if(Menu.instructions ){
+        Menu.instructions = false;
+        Menu.consoleBack = true; 
+        controlFlip = 'instructions'
+    } else if(Menu.settings.show  ){
+        Menu.settings.show  = false;
+        Menu.consoleBack = true; 
+        controlFlip = 'settings'
+    } else if(Menu.winnerScreen ){
+        Menu.winnerScreen = false;
+        Menu.consoleBack = true; 
+        controlFlip = 'winnerScreen'
+    } else if(Menu.playing ){
+        Menu.playing = false;
+        Menu.consoleBack = true; 
+        controlFlip = 'playing'
+    } else {
+        if(controlFlip === 'main') {
+            Menu.main.show = true;
+        } else if (controlFlip === "instructions") {
+            Menu.instructions = true
+        } else if (controlFlip === "settings") {
+            Menu.settings.show = true
+        } else if (controlFlip === "winnerScreen") {
+            Menu.winnerScreen = true
+        } else if (controlFlip === "playing") {
+            Menu.playing = true
+        } 
+        Menu.consoleBack = false;
+    }
+   
     if(audioMeowControl === 0) {
         audioMeowControl = 1
     } else {
@@ -909,3 +962,67 @@ containerConsole.addEventListener('click', () => {
         audioMeowControl = 0
     }
 })
+
+function navConsoleBack(event) {
+    if (event.key === "Delete") {
+        btnReset.classList.add('press_keyboard_delete')
+        helpKeyboardDelete.classList.add('press_keyboard')
+        setTimeout(()=> {
+            helpKeyboardDelete.classList.remove('press_keyboard')
+        }, 300)
+
+        if(controlFlip === 'main') {
+            Menu.main.show = true;
+        } else if (controlFlip === "instructions") {
+            Menu.instructions = true
+        } else if (controlFlip === "settings") {
+            Menu.settings.show = true
+        } else if (controlFlip === "winnerScreen") {
+            Menu.winnerScreen = true
+        } else if (controlFlip === "playing") {
+            Menu.playing = true
+        } 
+        Menu.consoleBack = false;
+        setTimeout(()=> {
+            containerConsole.querySelector('.console-inner').classList.remove('flip')
+
+            if(audioMeowControl === 0) {
+                audioMeowControl = 1
+            } else {
+                meow.play()
+                audioMeowControl = 0
+            }
+        }, 400)
+    } else if (event.key === "ArrowLeft") {
+        btnLeft.classList.add('press_left')
+        helpKeyboardArrows.classList.add('press_keyboard')
+        setTimeout(()=> {
+            helpKeyboardArrows.classList.remove('press_keyboard')
+        }, 300)
+    } else if (event.key === "ArrowRight") {
+        btnRight.classList.add('press_right')
+        helpKeyboardArrows.classList.add('press_keyboard')
+        setTimeout(()=> {
+            helpKeyboardArrows.classList.remove('press_keyboard')
+        }, 300)
+    } else if (event.key === "ArrowDown") {
+        btnDown.classList.add('press_down');
+        helpKeyboardArrows.classList.add('press_keyboard')
+        setTimeout(()=> {
+            helpKeyboardArrows.classList.remove('press_keyboard')
+        }, 300)
+    } else if (event.key === "ArrowUp") {
+        btnUp.classList.add('press_up');
+        helpKeyboardArrows.classList.add('press_keyboard')
+        setTimeout(()=> {
+            helpKeyboardArrows.classList.remove('press_keyboard')
+        }, 300)
+    } else if (event.key === "Enter") {
+        btnStart.classList.add('press_btn_start')
+        helpKeyboardEnter.classList.add('press_keyboard')
+        setTimeout(()=> {
+            helpKeyboardEnter.classList.remove('press_keyboard')
+        }, 300)
+
+        }
+}
