@@ -30,9 +30,8 @@ const iconEffectOff = document.querySelector('#effects_notification .icon_effect
 const clock = document.getElementById('clock');
 const soundClick = new Audio("./assets/sounds/click.wav");
 const soundMove = new Audio("./assets/sounds/move.wav");
-const soundWin = new Audio("./assets/sounds/final-level.wav");
-const meowA = new Audio("./assets/sounds/kitty-meow.wav");
-const meowB = new Audio("./assets/sounds/attention-meow.wav");
+const soundWin = new Audio("./assets/sounds/final_level.wav");
+const meow = new Audio("./assets/sounds/attention-meow.wav");
 
 const Menu = {
     main: {
@@ -243,28 +242,28 @@ function movePlayer(event) {
         btnUp.classList.add('press_up');
 
         if (map[position[0] - 1][position[1]] === "W" || position[0] === 0) {
-            event.preventDefault()
+            // event.preventDefault()
         } else {
             position[0] = position[0] - 1
         }
     } else if (event.key === "ArrowDown") {
         btnDown.classList.add('press_down');
         if (map[position[0] + 1][position[1]] === "W" || position[0] === map.length - 1) {
-            event.preventDefault()
+            // event.preventDefault()
         } else {
             position[0] = position[0] + 1
         }
     } else if (event.key === "ArrowLeft") {
         btnLeft.classList.add('press_left')
         if (map[position[0]][position[1] - 1] === "W" || position[1] === 0) {
-            event.preventDefault()
+            // event.preventDefault()
         } else {
             position[1] = position[1] - 1
         }
     } else if (event.key === "ArrowRight") {
         btnRight.classList.add('press_right')
         if (map[position[0]][position[1] + 1] === "W" || position[1] === map[0].length - 1) {
-            event.preventDefault()
+            // event.preventDefault()
         } else {
             position[1] = position[1] + 1
         }
@@ -904,10 +903,9 @@ let audioMeowControl = 0
 containerConsole.addEventListener('click', () => {
     containerConsole.querySelector('.console-inner').classList.toggle('flip')
     if(audioMeowControl === 0) {
-        meowA.play()
         audioMeowControl = 1
     } else {
-        meowB.play()
+        meow.play()
         audioMeowControl = 0
     }
 })

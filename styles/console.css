@@ -70,13 +70,16 @@
     font-size: 1rem;
     margin-bottom: 24px;
     text-align: center;
+    transform: translateY(260px);
 }
 
 .console-back #help .help_keyboard {
     display: flex;
     flex-direction: column;
     margin-bottom: 12px;
+    height: 600px;
     align-items: center;
+    justify-content: center;
 }
 
 .console-back #help img {
@@ -86,18 +89,18 @@
     transition: transform 400ms;
 }
 
-.console-back #help img + p {
+.console-back #help  img + p {
     font-size: .5rem;
     transition: transform 400ms;
     transform: scale(.9);
 }
 
-.console-back #help img:hover {
-    transform: scale(.9);
+.console-back #help .help_keyboard:hover img {
+    transform: scale(.7);
 }
 
-.console-back #help img:hover + p {
-    transform: scale(1);
+.console-back #help .help_keyboard:hover img + p {
+    transform: scale(1.1);
 }
 
 .console-back #bio {
@@ -184,7 +187,7 @@
     }
 
     .console-inner.flip .console-back #bio {
-        animation: bioVibra .5s .9s backwards, colorHue 5s 1.2s ease-in-out infinite alternate-reverse;
+        animation: bioVibra 1s .9s backwards, colorHue 5s 1.2s ease-in-out infinite alternate-reverse;
     }
        
     @keyframes bioVibra {
@@ -195,7 +198,7 @@
             transform: rotate(-10deg) translateY(180px) translateX(-150px);
         }   
         50% {
-            transform: rotate(-10deg) translateY(170px) translateX(-150px);
+            transform: rotate(-10deg) translateY(90px) translateX(-50px);
         }
         75% {
             transform: rotate(-10deg) translateY(180px) translateX(-150px);
