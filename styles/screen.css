@@ -75,6 +75,7 @@
 
 #screen #play p {
     width: fit-content;
+    width: -moz-max-content; 
     margin: 6px auto;
     text-align: center;
     font-size: .5rem;
@@ -143,12 +144,15 @@
     padding-bottom: 2px;
     display: inline;
     width: fit-content;
+    width: -moz-max-content; 
 }
 
 #screen #settings .selected {
     border-bottom: 3px solid rgb(58, 58, 58);
     height: fit-content;
+    height: -moz-max-content;
     width: fit-content;
+    width: -moz-max-content; 
 }
 
 #screen #settings span {
@@ -170,6 +174,7 @@
     display: flex;
     flex-direction: column;
     width: fit-content;
+    width: -moz-max-content; 
 }
 
 #screen #settings .theme_options span {
