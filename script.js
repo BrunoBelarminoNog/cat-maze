@@ -109,6 +109,7 @@ let finalPixelGame
 let position
 
 let recordGame = false
+
 let timer
 let time = null;
 let min = 0
