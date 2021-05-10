@@ -35,9 +35,9 @@
 
 # :rocket: Sobre o projeto
 
-CATmaze nasceu a partir do desafio de criar um clássico jogo de labirinto, logo me veio a mente de recriar a famosa estética dos consoles portáteis dos anos 90. 
+CATmaze nasceu a partir do desafio de construir um clássico jogo de labirinto, logo me veio a mente de recriar a famosa estética dos consoles portáteis dos anos 90. 
 
-Um dos requisitos deste desafio era ter sua navegação 100% guiada por eventos DOM de teclado. Ao realizar os primeiros teste, identifiquei que a primeira ação dos usuários era de usar o mouse, para reverter este problema e melhorar a usabilidade criei um aviso sobre quais teclas devem ser usadas, assim que o usuário clica com o mouse sobre o console o mesmo realiza um movimento de flip e mostra um pequeno manual.
+Um dos requisitos deste desafio era ter sua navegação 100% guiada por eventos DOM de teclado. Ao realizar os primeiros teste, identifiquei que a primeira ação dos usuários era de usar o mouse, para reverter este problema e melhorar a usabilidade criei um aviso sobre quais teclas devem ser usadas. Assim que o usuário clica com o mouse sobre o console o mesmo realiza um movimento de flip e mostra um pequeno manual.
 
 **CATmaze é um projeto realizado no curso de desenvolvimento full stack Kenzie Academy Brasil.**
 
@@ -79,13 +79,13 @@ git clone git@github.com:BrunoBelarminoNog/cat-maze.git
 
 # :pushpin: Contribuindo
 
-Sinta-se à vontade para registrar um novo problema com o respectivo título e descrição no repositório Foodfy . Se você já encontrou uma solução para o problema, eu adoraria revisar sua solicitação de pull!
+Sinta-se à vontade para registrar um novo problema com o respectivo título e descrição no repositório CATmaze . Se você já encontrou uma solução para o problema, eu adoraria revisar sua solicitação de pull!
 
 Verifique a página de contribuição para ver os melhores lugares para registrar problemas, iniciar discussões e começar a contribuir.
 
 
 # :unlock: Licença
-Lançado em 2020. Este projeto está sob a licença do MIT .
+Lançado em 2021. Este projeto está sob a licença do MIT .
 
 Feito com muita dedicação por Bruno Belarmino :zap:
 
